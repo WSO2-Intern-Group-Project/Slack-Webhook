@@ -10,12 +10,14 @@ listener slack:Listener webhookListener =  new(config,httpListener);
 service slack:MessageService on webhookListener {
   
     remote function onMessage(slack:Message payload ) returns error? {
+      log:printInfo("Message received onMessage" + payload.toBalString());
       //Not Implemented
     }
     remote function onMessageAppHome(slack:GenericEventWrapper payload ) returns error? {
       //Not Implemented
     }
     remote function onMessageChannels(slack:GenericEventWrapper payload ) returns error? {
+      log:printInfo("Message received onMessageChannels" + payload.toBalString());
       //Not Implemented
     }
     remote function onMessageGroups(slack:GenericEventWrapper payload ) returns error? {
