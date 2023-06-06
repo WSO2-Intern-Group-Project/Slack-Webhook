@@ -1,5 +1,6 @@
 import ballerinax/trigger.slack;
 import ballerina/http;
+import ballerina/log;
 
 configurable slack:ListenerConfig config = ?;
 
@@ -28,4 +29,16 @@ service slack:MessageService on webhookListener {
     }
 }
 
-service /ignore on httpListener {}
+service /ignore on httpListener {
+    resource function post challenge(http:Caller caller, http:Request req) returns error?{
+        http:Response res = new;
+        json payload = check req.getJsonPayload();
+        string challenge = check payload.challenge;
+        log:printInfo("Challenge received" + challenge);
+        res.setTextPayload(challenge);
+        var result = caller->respond(res);
+        if (result is error) {
+            log:printError("Error sending response", err = result.toString());
+        }
+    }
+}
