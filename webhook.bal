@@ -14,9 +14,9 @@ service slack:MessageService on webhookListener {
       log:printInfo("Message received onMessage" + payload.toBalString());
       json message = check payload.toJson().event.text;
       log:printInfo("Message : " + message.toString());
-      string[] x = regex:split(message.toString(), "Message : UserEmail: ");
+      string[] x = regex:split(message.toString(), "UserEmail: ");
       log:printInfo("Message : " + x.toString());
-      string[] content = regex:split(x[0], "\n");
+      string[] content = regex:split(x[1], "\n");
       log:printInfo("Message : " + content.toString());
       sendEmail(content[0], content[1], content[2]);
     }
