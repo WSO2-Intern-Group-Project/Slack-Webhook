@@ -11,6 +11,8 @@ service slack:MessageService on webhookListener {
   
     remote function onMessage(slack:Message payload ) returns error? {
       log:printInfo("Message received onMessage" + payload.toBalString());
+      json message = check payload.toJson().event.text;
+      log:printInfo("Message : " + message.toString());
       //Not Implemented
     }
     remote function onMessageAppHome(slack:GenericEventWrapper payload ) returns error? {
