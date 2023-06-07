@@ -27,6 +27,6 @@ public function sendEmail(string recipientEmail, string messageBody, string user
         log:printInfo("Sent Message ID: "+ sendMessageResponse.id);
         log:printInfo("Sent Thread ID: "+ sendMessageResponse.threadId);
     } else {
-        log:printError("Error: ", sendMessageResponse);
+        log:printError(sendMessageResponse.message(), sendMessageResponse);
     }
 }
