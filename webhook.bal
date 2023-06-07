@@ -1,6 +1,7 @@
 import ballerinax/trigger.slack;
 import ballerina/http;
 import ballerina/log;
+import ballerina/regex;
 
 configurable slack:ListenerConfig config = ?;
 
@@ -13,9 +14,9 @@ service slack:MessageService on webhookListener {
       log:printInfo("Message received onMessage" + payload.toBalString());
       json message = check payload.toJson().event.text;
       log:printInfo("Message : " + message.toString());
-      string[] x = re `Message : UserEmail: `.split(message.toString());
+      string[] x = regex:split(message.toString(), "Message : UserEmail: ");
       log:printInfo("Message : " + x.toString());
-      string[] content = re `\n`.split(x[1]);
+      string[] content = regex:split(x[0], "\n");
       log:printInfo("Message : " + content.toString());
       //Not Implemented
     }
