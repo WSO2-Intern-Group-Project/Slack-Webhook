@@ -18,7 +18,11 @@ service slack:MessageService on webhookListener {
       log:printInfo("Message : " + x.toString());
       string[] content = regex:split(x[1], "\n");
       log:printInfo("Message : " + content.toString());
-      sendEmail(regex:split(regex:split(content[0],"|")[0],":")[-1], content[1]+"\n\n"+content[3], content[1].substring(3));
+      string email = regex:split(regex:split(content[0],"|")[0],":")[-1];
+      string body = content[1]+"\n\n"+content[3];
+      string userName = content[1].substring(3);
+      log:printInfo("email : " + email + "\n" + "body : " + body +"\n" + "user name : " + userName);
+      sendEmail(email , body, userName);
     }
     remote function onMessageAppHome(slack:GenericEventWrapper payload ) returns error? {
       //Not Implemented
